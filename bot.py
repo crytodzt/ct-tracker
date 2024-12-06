@@ -12,6 +12,11 @@ TWITTER_BEARER_TOKEN = os.getenv("TWITTER_BEARER_TOKEN")
 CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 TWITTER_ACCOUNTS = os.getenv("TWITTER_ACCOUNTS").split(",")
 
+print(f"DISCORD_TOKEN: {DISCORD_TOKEN}")
+print(f"TWITTER_BEARER_TOKEN: {TWITTER_BEARER_TOKEN}")
+print(f"CHANNEL_ID: {CHANNEL_ID}")
+print(f"TWITTER_ACCOUNTS: {TWITTER_ACCOUNTS}")
+
 # Configuração do bot Discord
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
@@ -26,7 +31,7 @@ def fetch_tweets():
     return tweets.data if tweets.data else []
 
 # Tarefa para monitorar tweets periodicamente
-@tasks.loop(minutes=1)
+@tasks.loop(minutes=5)  # Executar a cada 5 minutos
 async def check_tweets():
     channel = client.get_channel(CHANNEL_ID)
     tweets = fetch_tweets()
